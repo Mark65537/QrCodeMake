@@ -16,7 +16,7 @@ namespace GeneralClassLibrary
         {
             try
             {
-                // адрес smtp-сервера и порт, с которого будем отправлять письмо
+                // адрес smtp-сервера и порт, с которого будем отправлять письмо. Внимание зависит от того где созданна ваша почта
                 SmtpClient mySmtpClient = new SmtpClient("smtp.yandex.ru", 25);
 
                 // set smtp-client with basicAuthentication

@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml.Linq;
 using QrCodeMake_WinForm.Properties;
+using System.Security;
 
 namespace QrCodeMake_WinForm
 {
@@ -30,16 +31,32 @@ namespace QrCodeMake_WinForm
         private void MainForm_Load(object sender, EventArgs e)
         {
             Text += Assembly.GetExecutingAssembly().GetName().Version;
-            MinimumSize = Size;
-            cB_error.SelectedIndex = 1;
+            MinimumSize = Size;//для того что бы нельзя было уменьшить форму
+            cB_error.SelectedIndex = Settings.Default.corErr;
 
-            if (!tB_fileName.Text.Equals(string.Empty))
+            if (!tB_fileName.Text.Equals(string.Empty) || !(tB_fileName.Text = Settings.Default.excelFile).Equals(string.Empty))
             {
                 if (cB_error.Text.Equals(string.Empty))
                     lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text);
                 else
                     lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text, cB_error.SelectedIndex);
+
+                pB_QrCode.Image = lpersons[0].QrCode;
+                b_next.Enabled = lpersons.Count > 1 ? true : false;
             }
+            //else if (!Settings.Default.excelFile.Equals(string.Empty))
+            //{               
+                
+            //    tB_fileName.Text = Settings.Default.excelFile;
+
+            //    if (cB_error.Text.Equals(string.Empty))
+            //        lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text);
+            //    else
+            //        lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text, cB_error.SelectedIndex);
+
+            //    pB_QrCode.Image = lpersons[0].QrCode;
+            //    b_next.Enabled = lpersons.Count > 0 ? true : false;                
+            //}
         }
 
         private void b_open_Click(object sender, EventArgs e)
@@ -52,7 +69,7 @@ namespace QrCodeMake_WinForm
                     lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
                 
                 pB_QrCode.Image = lpersons[0].QrCode;
-                b_next.Enabled = true;
+                b_next.Enabled=lpersons.Count > 1 ? true : false;
             }
         }
 
@@ -131,33 +148,33 @@ namespace QrCodeMake_WinForm
             string subject = "Сообщение сгенерированно с помощью программы QrCodeMake";
             string emailFrom = Settings.Default.emailFrom;
             string emailTo = lpersons[persons_index].Email;
-            string pass = Settings.Default.appPass;
+            SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) =>{s.AppendChar(c);return s;}, (s) =>{s.MakeReadOnly();return s;}); 
 
             Dictionary<string,string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);
             string bmpName = lpersons[persons_index].ToString() + ".png";
 
-            if (!confDic.ContainsKey("{$img_qrcode}"))
-            {
-                
-                if (!File.Exists(bmpName))
-                {
-                    lpersons[persons_index].QrCode.Save(bmpName);                    
-                }
-                HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);
-            }
-            else
-            {
-                if (!File.Exists(bmpName))
-                {
-                    lpersons[persons_index].QrCode.Save(bmpName);
-                }
-            }
+            if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
+                lpersons[persons_index].QrCode.Save(bmpName);
+
+            //if (!confDic.ContainsKey("{$img_qrcode}"))//если нету ключа, то мы его создаем
+            //{
+            //    HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);
+            //}
+            //else if (!confDic["{$img_qrcode}"].Equals(bmpName))//если есть ключ, но не то значение то мы его перезаписываем
+            //{
+            //    HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);//перезаписать значение в файле
+            //}
 
             WordClass.ConvertDocToHtml(wordPath, htmlPath);
             string result = EmailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
             MessageBox.Show(result, "Информация");
         }
 
-
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.corErr = cB_error.SelectedIndex;
+            Settings.Default.excelFile = tB_fileName.Text;
+            Settings.Default.Save();
+        }
     }
 }
