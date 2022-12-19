@@ -44,19 +44,6 @@ namespace QrCodeMake_WinForm
                 pB_QrCode.Image = lpersons[0].QrCode;
                 b_next.Enabled = lpersons.Count > 1 ? true : false;
             }
-            //else if (!Settings.Default.excelFile.Equals(string.Empty))
-            //{               
-                
-            //    tB_fileName.Text = Settings.Default.excelFile;
-
-            //    if (cB_error.Text.Equals(string.Empty))
-            //        lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text);
-            //    else
-            //        lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text, cB_error.SelectedIndex);
-
-            //    pB_QrCode.Image = lpersons[0].QrCode;
-            //    b_next.Enabled = lpersons.Count > 0 ? true : false;                
-            //}
         }
 
         private void b_open_Click(object sender, EventArgs e)
@@ -140,34 +127,52 @@ namespace QrCodeMake_WinForm
         private void b_sendEmail_Click(object sender, EventArgs e)
         {
             //Paths
-             string wordPath= "C:\\Users\\User\\Desktop\\пример QR кода.docx";
-             string htmlPath= "C:\\Users\\User\\Desktop\\пример QR кода.html";
+             string wordPath = "C:\\Users\\User\\Desktop\\пример QR кода.docx";
+             string htmlPath = "C:\\Users\\User\\Desktop\\пример QR кода.html";
              string confPath = "C:\\Users\\User\\Desktop\\conf.cfg";
             //Paths end
 
             string subject = "Сообщение сгенерированно с помощью программы QrCodeMake";
-            string emailFrom = Settings.Default.emailFrom;
+            string emailFrom = Settings.Default.mailFrom;
             string emailTo = lpersons[persons_index].Email;
-            SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) =>{s.AppendChar(c);return s;}, (s) =>{s.MakeReadOnly();return s;}); 
+            SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) => { s.AppendChar(c); return s; }, (s) => { s.MakeReadOnly(); return s; });
 
-            Dictionary<string,string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);
-            string bmpName = lpersons[persons_index].ToString() + ".png";
-
-            if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
-                lpersons[persons_index].QrCode.Save(bmpName);
-
-            //if (!confDic.ContainsKey("{$img_qrcode}"))//если нету ключа, то мы его создаем
-            //{
-            //    HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);
-            //}
-            //else if (!confDic["{$img_qrcode}"].Equals(bmpName))//если есть ключ, но не то значение то мы его перезаписываем
-            //{
-            //    HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);//перезаписать значение в файле
-            //}
+            Dictionary<string, string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);            
+            string bmpName = string.Empty;
+            string result = string.Empty;
 
             WordClass.ConvertDocToHtml(wordPath, htmlPath);
-            string result = EmailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
+
+            if (chB_sendAll.Checked)
+            {
+                foreach (Person p in lpersons)
+                {
+                    bmpName = p.ToString() + ".png";
+
+                    if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
+                        p.QrCode.Save(bmpName);
+
+                    confDic["{$img_qrcode}"] = bmpName;
+                    result += MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
+                }
+            }
+            else
+            {
+                bmpName = lpersons[persons_index].ToString() + ".png";
+
+                if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
+                    lpersons[persons_index].QrCode.Save(bmpName);
+
+                confDic["{$img_qrcode}"] = bmpName;
+                result = MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
+            }
+            
             MessageBox.Show(result, "Информация");
+        }
+
+        private void sandEmail()
+        {
+            
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

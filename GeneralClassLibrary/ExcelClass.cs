@@ -35,14 +35,16 @@ namespace GeneralClassLibrary
                 int y = 2;
                 int x = 1;
 
-                Person person = new Person();
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
                 {
-                    person.SurName = sheet.Cells[y, x].text;
-                    person.Name = sheet.Cells[y, x + 1].text;
-                    person.Patronymic = sheet.Cells[y, x + 2].text;
-                    person.Company = sheet.Cells[y, x + 3].text;
-                    person.Email = sheet.Cells[y, x + 4].text;
+                    Person person = new Person()
+                    {
+                        SurName = sheet.Cells[y, x].text,
+                        Name = sheet.Cells[y, x + 1].text,
+                        Patronymic = sheet.Cells[y, x + 2].text,
+                        Company = sheet.Cells[y, x + 3].text,
+                        Email = sheet.Cells[y, x + 4].text
+                    };
 
                     QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
 

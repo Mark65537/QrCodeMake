@@ -7,10 +7,12 @@ using System.Net.Mime;
 using System.IO;
 using DocumentFormat.OpenXml;
 using System.Security;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Windows.Forms;
 
 namespace GeneralClassLibrary
 {
-    public class EmailClass
+    public class MailClass
     {
         public static string sendEmail(string emailFrom, string emailTo, SecureString pass, string body, Dictionary<string, string> confDic, string subject= "Test message")
         {
@@ -64,13 +66,14 @@ namespace GeneralClassLibrary
                 myMail.IsBodyHtml = true;
 
                 mySmtpClient.Send(myMail);
-                return "Сообщение отправленно";
+                return $"Сообщение {emailTo} отправленно\n";
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return ex.Message;
             }
         }
+
 
         private static AlternateView GetEmbeddedImage(String imgPath)
         {

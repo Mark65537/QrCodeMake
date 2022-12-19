@@ -64,7 +64,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmailClass.cs" />
+    <Compile Include="MailClass.cs" />
     <Compile Include="ExcelClass.cs" />
     <Compile Include="HtmlClass.cs" />
     <Compile Include="Person.cs" />
