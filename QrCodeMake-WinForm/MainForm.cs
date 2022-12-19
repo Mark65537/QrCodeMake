@@ -32,6 +32,14 @@ namespace QrCodeMake_WinForm
             Text += Assembly.GetExecutingAssembly().GetName().Version;
             MinimumSize = Size;
             cB_error.SelectedIndex = 1;
+
+            if (!tB_fileName.Text.Equals(string.Empty))
+            {
+                if (cB_error.Text.Equals(string.Empty))
+                    lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text);
+                else
+                    lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text, cB_error.SelectedIndex);
+            }
         }
 
         private void b_open_Click(object sender, EventArgs e)
@@ -126,15 +134,23 @@ namespace QrCodeMake_WinForm
             string pass = Settings.Default.appPass;
 
             Dictionary<string,string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);
+            string bmpName = lpersons[persons_index].ToString() + ".png";
 
             if (!confDic.ContainsKey("{$img_qrcode}"))
             {
-                string bmpName = lpersons[persons_index].ToString() + ".png";
+                
                 if (!File.Exists(bmpName))
                 {
                     lpersons[persons_index].QrCode.Save(bmpName);                    
                 }
                 HtmlClass.WriteCfg(ref confDic, confPath, "{$img_qrcode}", bmpName);
+            }
+            else
+            {
+                if (!File.Exists(bmpName))
+                {
+                    lpersons[persons_index].QrCode.Save(bmpName);
+                }
             }
 
             WordClass.ConvertDocToHtml(wordPath, htmlPath);

@@ -131,6 +131,7 @@
             this.tB_fileName.Name = "tB_fileName";
             this.tB_fileName.Size = new System.Drawing.Size(285, 21);
             this.tB_fileName.TabIndex = 3;
+            this.tB_fileName.Text = "C:\\Users\\User\\Desktop\\ЛистMicrosoftExcel.xlsx";
             // 
             // b_open
             // 

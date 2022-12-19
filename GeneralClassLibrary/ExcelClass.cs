@@ -42,6 +42,7 @@ namespace GeneralClassLibrary
                     person.Name = sheet.Cells[y, x + 1].text;
                     person.Patronymic = sheet.Cells[y, x + 2].text;
                     person.Company = sheet.Cells[y, x + 3].text;
+                    person.Email = sheet.Cells[y, x + 4].text;
 
                     QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
 

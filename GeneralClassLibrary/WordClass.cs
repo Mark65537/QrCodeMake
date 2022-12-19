@@ -1,10 +1,14 @@
 ﻿using DocumentFormat.OpenXml.ExtendedProperties;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using Microsoft.Office.Interop.Excel;
 using OpenXmlPowerTools;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -36,20 +40,41 @@ namespace GeneralClassLibrary
 
         public static void ConvertDocToHtml(object Sourcepath, object TargetPath)
         {
+            Word.Application newApp=null;
+            Word.Documents d=null;
+            Word.Document doc=null;
 
-            Word.Application newApp = new Word.Application();
-            Word.Documents d = newApp.Documents;
-            object Unknown = Type.Missing;
-            Word.Document doc = d.Open(ref Sourcepath);
+            try
+            {
+                newApp = new Word.Application();
 
-            object format = Word.WdSaveFormat.wdFormatHTML;
 
-            doc.WebOptions.Encoding = Microsoft.Office.Core.MsoEncoding.msoEncodingUTF8;
+                object Unknown = Type.Missing;
+                d = newApp.Documents;
+                doc = d.Open(ref Sourcepath);
 
-            newApp.ActiveDocument.SaveAs(ref TargetPath, ref format);
-            
-            newApp.Documents.Close(Word.WdSaveOptions.wdDoNotSaveChanges);
+                object format = Word.WdSaveFormat.wdFormatHTML;
 
+                doc.WebOptions.Encoding = Microsoft.Office.Core.MsoEncoding.msoEncodingUTF8;
+
+                newApp.ActiveDocument.SaveAs(ref TargetPath, ref format);
+
+                newApp.Quit();
+
+                //newApp.Documents.Close(Word.WdSaveOptions.wdDoNotSaveChanges);
+                //newApp.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                //освобождаем память, занятую объектами
+                Marshal.ReleaseComObject(newApp);
+                Marshal.ReleaseComObject(d);
+                Marshal.ReleaseComObject(doc);
+            }
         }
     }
 }

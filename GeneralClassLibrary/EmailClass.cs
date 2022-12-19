@@ -6,12 +6,13 @@ using System.Net;
 using System.Net.Mime;
 using System.IO;
 using DocumentFormat.OpenXml;
+using System.Security;
 
 namespace GeneralClassLibrary
 {
     public class EmailClass
     {
-        public static string sendEmail(string emailFrom, string emailTo, string pass, string body, Dictionary<string, string> confDic, string subject= "Test message")
+        public static string sendEmail(string emailFrom, string emailTo, SecureString pass, string body, Dictionary<string, string> confDic, string subject= "Test message")
         {
             try
             {
@@ -54,14 +55,10 @@ namespace GeneralClassLibrary
                 }
                 
                 AlternateView alternateView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
-                
-                foreach (LinkedResource llr in lLinkedResource)
-                {
-                    alternateView.LinkedResources.Add(llr);
-                }
+
+                lLinkedResource.ForEach(alternateView.LinkedResources.Add);//тоже самое что foreach (LinkedResource llr in lLinkedResource) alternateView.LinkedResources.Add(llr);
                 
                 myMail.AlternateViews.Add(alternateView);
-                //myMail.Body = body;
 
                 // text or html
                 myMail.IsBodyHtml = true;
