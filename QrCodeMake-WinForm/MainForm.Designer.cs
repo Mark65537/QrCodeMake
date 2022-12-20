@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pB_QrCode = new System.Windows.Forms.PictureBox();
             this.cMS_forPicBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TSMI_normal = new System.Windows.Forms.ToolStripMenuItem();
@@ -276,6 +277,7 @@
             this.Controls.Add(this.b_next);
             this.Controls.Add(this.b_prev);
             this.Controls.Add(this.pB_QrCode);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "QrCodeMake ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
