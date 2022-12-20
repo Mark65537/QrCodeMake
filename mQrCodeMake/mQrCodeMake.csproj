@@ -7,11 +7,11 @@
     <ProjectGuid>{2A9628A0-FDC2-482D-9ED9-B87E52ADAD14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneralClassLibrary</RootNamespace>
-    <AssemblyName>GeneralClassLibrary</AssemblyName>
+    <RootNamespace>mQrCodeMake</RootNamespace>
+    <AssemblyName>mQrCodeMake</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using QrCodeMake_WinForm.Properties;
 using System.Security;
 
+
 namespace QrCodeMake_WinForm
 {
     public partial class MainForm : Form

@@ -26,7 +26,7 @@ namespace GeneralClassLibrary
             QrCode= qrcode;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return $"{SurName} {Name} {Patronymic} {Company}";
         }
