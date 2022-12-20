@@ -55,6 +55,9 @@
             // 
             // pB_QrCode
             // 
+            this.pB_QrCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pB_QrCode.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pB_QrCode.ContextMenuStrip = this.cMS_forPicBox;
             this.pB_QrCode.Location = new System.Drawing.Point(67, 12);
@@ -103,6 +106,7 @@
             // 
             // b_prev
             // 
+            this.b_prev.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.b_prev.Enabled = false;
             this.b_prev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.b_prev.Location = new System.Drawing.Point(67, 234);
@@ -115,11 +119,13 @@
             // 
             // b_next
             // 
+            this.b_next.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.b_next.AutoSize = true;
             this.b_next.Enabled = false;
             this.b_next.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_next.Location = new System.Drawing.Point(257, 234);
+            this.b_next.Location = new System.Drawing.Point(257, 232);
             this.b_next.Name = "b_next";
-            this.b_next.Size = new System.Drawing.Size(75, 23);
+            this.b_next.Size = new System.Drawing.Size(75, 25);
             this.b_next.TabIndex = 2;
             this.b_next.Text = "→";
             this.b_next.UseVisualStyleBackColor = true;
@@ -127,6 +133,8 @@
             // 
             // tB_fileName
             // 
+            this.tB_fileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_fileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tB_fileName.Location = new System.Drawing.Point(13, 264);
             this.tB_fileName.Name = "tB_fileName";
@@ -135,6 +143,7 @@
             // 
             // b_open
             // 
+            this.b_open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_open.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.b_open.Location = new System.Drawing.Point(314, 263);
             this.b_open.Name = "b_open";
@@ -146,6 +155,7 @@
             // 
             // l_error
             // 
+            this.l_error.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_error.AutoSize = true;
             this.l_error.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.l_error.Location = new System.Drawing.Point(14, 295);
@@ -156,6 +166,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(269, 295);
@@ -167,6 +178,7 @@
             // 
             // nUD_border
             // 
+            this.nUD_border.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.nUD_border.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nUD_border.Location = new System.Drawing.Point(329, 293);
             this.nUD_border.Name = "nUD_border";
@@ -181,6 +193,7 @@
             // 
             // b_copyQr
             // 
+            this.b_copyQr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_copyQr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.b_copyQr.Location = new System.Drawing.Point(13, 323);
             this.b_copyQr.Name = "b_copyQr";
@@ -192,6 +205,7 @@
             // 
             // cB_error
             // 
+            this.cB_error.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cB_error.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_error.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cB_error.FormattingEnabled = true;
@@ -211,6 +225,7 @@
             // 
             // b_sendEmail
             // 
+            this.b_sendEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_sendEmail.Location = new System.Drawing.Point(162, 323);
             this.b_sendEmail.Name = "b_sendEmail";
             this.b_sendEmail.Size = new System.Drawing.Size(123, 23);
@@ -221,6 +236,7 @@
             // 
             // b_about
             // 
+            this.b_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_about.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.b_about.Location = new System.Drawing.Point(3, 361);
             this.b_about.Name = "b_about";
@@ -231,6 +247,7 @@
             // 
             // chB_sendAll
             // 
+            this.chB_sendAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chB_sendAll.AutoSize = true;
             this.chB_sendAll.Checked = true;
             this.chB_sendAll.CheckState = System.Windows.Forms.CheckState.Checked;
