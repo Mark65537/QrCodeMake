@@ -5,7 +5,7 @@
 
 # Описание программы
 
-[!image]()
+[!image](https://github.com/Mark65537/QrCodeMake/blob/master/screens/main.png)
 
 # Описание проектов
 mQrCodeMake - проект где собранны основные модули, которые используются в остальных проектах. Для удобства
