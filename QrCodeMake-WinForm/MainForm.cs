@@ -30,14 +30,21 @@ namespace QrCodeMake_WinForm
         int persons_index = 0;
 
         //Paths
-         string wordPath = "template.docx";
-         string htmlPath = "template.html";
-         string confPath = "conf.cfg";
-         string qrCodeFolder = "qrCodeImg\\";
+         string progPath = Environment.CurrentDirectory;//папка где будут находиться файл конфигурации и файлы шаблонов
+         string wordPath;
+         string htmlPath;
+         string confPath;
+         string qrCodeFolder;
         //Paths end
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Paths   перемещены сюда для того что бы работал progPath 
+             wordPath = progPath + "template.docx";
+             htmlPath = progPath + "template.html";
+             confPath = "conf.cfg";
+             qrCodeFolder = "qrCodeImg\\";
+            //Paths end
             Text += Assembly.GetExecutingAssembly().GetName().Version;
             MinimumSize = Size;//для того что бы нельзя было уменьшить форму
             cB_error.SelectedIndex = Settings.Default.corErr;

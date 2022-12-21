@@ -38,12 +38,12 @@ namespace GeneralClassLibrary
 
         
 
-        public static void ConvertDocToHtml(object Sourcepath, object TargetPath)
+        public static string ConvertDocToHtml(object Sourcepath, object TargetPath)
         {
             Word.Application newApp=null;
             Word.Documents d=null;
             Word.Document doc=null;
-
+            string err = string.Empty;
             try
             {
                 newApp = new Word.Application();
@@ -60,18 +60,20 @@ namespace GeneralClassLibrary
                 newApp.ActiveDocument.SaveAs(ref TargetPath, ref format);
 
                 newApp.Quit();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                err=ex.ToString();
             }
             finally
             {
                 //освобождаем память, занятую объектами
-                Marshal.ReleaseComObject(newApp);
-                Marshal.ReleaseComObject(d);
                 Marshal.ReleaseComObject(doc);
+                Marshal.ReleaseComObject(d);
+                Marshal.ReleaseComObject(newApp);                
             }
+            return err;
         }
     }
 }
