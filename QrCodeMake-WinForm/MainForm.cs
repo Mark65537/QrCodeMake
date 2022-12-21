@@ -40,9 +40,9 @@ namespace QrCodeMake_WinForm
         private void MainForm_Load(object sender, EventArgs e)
         {
             //Paths   перемещены сюда для того что бы работал progPath 
-             wordPath = progPath + "template.docx";
-             htmlPath = progPath + "template.html";
-             confPath = "conf.cfg";
+             wordPath = progPath + "\\template.docx";
+             htmlPath = progPath + "\\template.html";
+             confPath = progPath + "\\conf.cfg";
              qrCodeFolder = "qrCodeImg\\";
             //Paths end
             Text += Assembly.GetExecutingAssembly().GetName().Version;
@@ -72,6 +72,8 @@ namespace QrCodeMake_WinForm
                 
                 pB_QrCode.Image = lpersons[0].QrCode;
                 b_next.Enabled=lpersons.Count > 1 ? true : false;
+                b_copyQr.Enabled = true;
+                b_sendEmail.Enabled = true;
             }
         }
 
@@ -178,6 +180,7 @@ namespace QrCodeMake_WinForm
                 result = MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
             }
             File.Delete(htmlPath);
+            Directory.Delete(htmlPath.Replace(".html", ".files"), true);
             MessageBox.Show(result, "Информация");
         }
 
