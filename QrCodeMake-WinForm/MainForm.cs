@@ -29,6 +29,13 @@ namespace QrCodeMake_WinForm
         List<Person> lpersons= new List<Person>();
         int persons_index = 0;
 
+        //Paths
+         string wordPath = "template.docx";
+         string htmlPath = "template.html";
+         string confPath = "conf.cfg";
+         string qrCodeFolder = "qrCodeImg\\";
+        //Paths end
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             Text += Assembly.GetExecutingAssembly().GetName().Version;
@@ -127,12 +134,6 @@ namespace QrCodeMake_WinForm
 
         private void b_sendEmail_Click(object sender, EventArgs e)
         {
-            //Paths
-             string wordPath = "C:\\Users\\User\\Desktop\\пример QR кода.docx";
-             string htmlPath = "C:\\Users\\User\\Desktop\\пример QR кода.html";
-             string confPath = "C:\\Users\\User\\Desktop\\conf.cfg";
-            //Paths end
-
             string subject = "Сообщение сгенерированно с помощью программы QrCodeMake";
             string emailFrom = Settings.Default.mailFrom;
             string emailTo = lpersons[persons_index].Email;
@@ -144,11 +145,13 @@ namespace QrCodeMake_WinForm
 
             WordClass.ConvertDocToHtml(wordPath, htmlPath);
 
+            Directory.CreateDirectory(qrCodeFolder).Attributes |= FileAttributes.Hidden;//создание скрытой папки для хранения картинок QR-кодов 
+
             if (chB_sendAll.Checked)
             {
                 foreach (Person p in lpersons)
                 {
-                    bmpName = p.ToString() + ".png";
+                    bmpName = qrCodeFolder + p.ToString() + ".png";
 
                     if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                         p.QrCode.Save(bmpName);
@@ -159,7 +162,7 @@ namespace QrCodeMake_WinForm
             }
             else
             {
-                bmpName = lpersons[persons_index].ToString() + ".png";
+                bmpName = qrCodeFolder + lpersons[persons_index].ToString() + ".png";
 
                 if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                     lpersons[persons_index].QrCode.Save(bmpName);
@@ -167,13 +170,8 @@ namespace QrCodeMake_WinForm
                 confDic["{$img_qrcode}"] = bmpName;
                 result = MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
             }
-            
+            File.Delete(htmlPath);
             MessageBox.Show(result, "Информация");
-        }
-
-        private void sandEmail()
-        {
-            
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

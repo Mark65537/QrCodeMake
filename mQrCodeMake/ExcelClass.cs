@@ -17,12 +17,10 @@ namespace GeneralClassLibrary
         public static List<Person> ExcelToPersons(string pathToExcel, int err = 1)
         {            
             //переменные для Excel
-            Application application = null;
-            Workbooks workbooks = null;
-            Workbook workbook = null;
-            //Sheets sheets = null;
-            Worksheet sheet = null;
-            //Range cell = null;
+             Application application = null;
+             Workbooks workbooks = null;
+             Workbook workbook = null;
+             Worksheet sheet = null;
             //переменные для Excel end
             List<Person> lpersons = new List<Person>();
             try

@@ -60,9 +60,6 @@ namespace GeneralClassLibrary
                 newApp.ActiveDocument.SaveAs(ref TargetPath, ref format);
 
                 newApp.Quit();
-
-                //newApp.Documents.Close(Word.WdSaveOptions.wdDoNotSaveChanges);
-                //newApp.Visible = false;
             }
             catch (Exception ex)
             {
