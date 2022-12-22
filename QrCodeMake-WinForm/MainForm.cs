@@ -143,16 +143,18 @@ namespace QrCodeMake_WinForm
 
         private void b_sendEmail_Click(object sender, EventArgs e)
         {
-            string subject = "Сообщение сгенерированно с помощью программы QrCodeMake";
+            string subject = Settings.Default.subject;
             string emailFrom = Settings.Default.mailFrom;
             string emailTo = lpersons[persons_index].Email;
+            string provider = Settings.Default.provider;
             SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) => { s.AppendChar(c); return s; }, (s) => { s.MakeReadOnly(); return s; });
 
             Dictionary<string, string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);            
             string bmpName = string.Empty;
             string result = string.Empty;
 
-            WordClass.ConvertDocToHtml(wordPath, htmlPath);
+            if (File.Exists(wordPath)) 
+                WordClass.ConvertDocToHtml(wordPath, htmlPath);
 
             Directory.CreateDirectory(qrCodeFolder).Attributes |= FileAttributes.Hidden;//создание скрытой папки для хранения картинок QR-кодов 
 
@@ -166,7 +168,13 @@ namespace QrCodeMake_WinForm
                         p.QrCode.Save(bmpName);
 
                     confDic["{$img_qrcode}"] = bmpName;
-                    result += MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
+                    result += MailClass.sendEmail(emailFrom, 
+                                                  emailTo,
+                                                  pass,
+                                                  body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",
+                                                  confDic, 
+                                                  subject, 
+                                                  provider);
                 }
             }
             else
@@ -177,14 +185,22 @@ namespace QrCodeMake_WinForm
                     lpersons[persons_index].QrCode.Save(bmpName);
 
                 confDic["{$img_qrcode}"] = bmpName;
-                result = MailClass.sendEmail(emailFrom, emailTo, pass, body: File.ReadAllText(htmlPath), confDic, subject);
+                result = MailClass.sendEmail(emailFrom,
+                                             emailTo,
+                                             pass,
+                                             body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",
+                                             confDic,
+                                             subject,
+                                             provider);
             }
+
             File.Delete(htmlPath);
-            Directory.Delete(htmlPath.Replace(".html", ".files"), true);
+            if(Directory.Exists(htmlPath.Replace(".html", ".files")))
+                Directory.Delete(htmlPath.Replace(".html", ".files"), true);
             MessageBox.Show(result, "Информация");
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) 
         {
             Settings.Default.corErr = cB_error.SelectedIndex;
             Settings.Default.excelFile = tB_fileName.Text;

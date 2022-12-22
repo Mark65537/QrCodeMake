@@ -14,12 +14,12 @@ namespace GeneralClassLibrary
 {
     public class MailClass
     {
-        public static string sendEmail(string emailFrom, string emailTo, SecureString pass, string body, Dictionary<string, string> confDic, string subject= "Test message")
+        public static string sendEmail(string emailFrom, string emailTo, SecureString pass, string body, Dictionary<string, string> confDic, string subject= "Test message", string provider="yandex")
         {
             try
             {
                 // адрес smtp-сервера и порт, с которого будем отправлять письмо. Внимание зависит от того где созданна ваша почта
-                SmtpClient mySmtpClient = new SmtpClient("smtp.yandex.ru", 25);
+                SmtpClient mySmtpClient = new SmtpClient($"smtp.{provider}.ru", 25);//есть еще 465 и 587
 
                 // set smtp-client with basicAuthentication
                 mySmtpClient.UseDefaultCredentials = false;
