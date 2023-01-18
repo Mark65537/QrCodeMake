@@ -223,7 +223,9 @@
             // 
             // oFD_file
             // 
-            this.oFD_file.FileName = "openFileDialog1";
+            this.oFD_file.DefaultExt = "xls;*.xlsx";
+            this.oFD_file.Filter = "Microsoft Excel (*.xls*)|*.xls*";
+            this.oFD_file.Title = "Выберите документ Excel";
             // 
             // b_sendEmail
             // 

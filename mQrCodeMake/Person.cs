@@ -9,13 +9,27 @@ namespace GeneralClassLibrary
 {
     public class Person
     {
+        
         public string Name="";
         public string SurName="";
         public string Patronymic = "";
-        public string Company = "";
         public string Email = "";
+        public string Company = "";
+        public List<string> Events= new List<string>();        
+        public List<bool>  IsOchn = new List<bool>();        
         public Bitmap QrCode=null;
-        
+
+        public string Fio
+        {
+            set
+            {
+                string[] temp = value.Split();
+                Name = temp[0];
+                SurName= temp[1];
+                Patronymic = temp[2];
+            }
+        }
+
         public Person() { }
 
         public Person(string name, string surname, string patronymic, string company, Bitmap qrcode) {

@@ -15,6 +15,7 @@ using System.IO;
 using System.Xml.Linq;
 using QrCodeMake_WinForm.Properties;
 using System.Security;
+using System.Security.Cryptography;
 
 
 namespace QrCodeMake_WinForm
@@ -70,7 +71,7 @@ namespace QrCodeMake_WinForm
                 else
                     lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
                 
-                pB_QrCode.Image = lpersons[0].QrCode;
+                pB_QrCode.Image = lpersons[0].QrCode;                
                 b_next.Enabled=lpersons.Count > 1 ? true : false;
                 b_copyQr.Enabled = true;
                 b_sendEmail.Enabled = true;

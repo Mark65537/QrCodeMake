@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using Net.Codecrete.QrCodeGenerator;
 
@@ -15,9 +14,9 @@ namespace GeneralClassLibrary
         private static readonly QrCode.Ecc[] _eCorLev = { QrCode.Ecc.Low, QrCode.Ecc.Medium, QrCode.Ecc.Quartile, QrCode.Ecc.High };
 
         public static List<Person> ExcelToPersons(string pathToExcel, int err = 1)
-        {            
+        {
             //переменные для Excel
-             Application application = null;
+             Microsoft.Office.Interop.Excel.Application application = null;//не удалять
              Workbooks workbooks = null;
              Workbook workbook = null;
              Worksheet sheet = null;
@@ -25,7 +24,7 @@ namespace GeneralClassLibrary
             List<Person> lpersons = new List<Person>();
             try
             {
-                application = new Application(); //запуск программы excel
+                application = new Microsoft.Office.Interop.Excel.Application(); //запуск программы excel
                 workbooks = application.Workbooks;
                 workbook = workbooks.Open(pathToExcel);//получаем доступ к первому листу                                               
                 sheet = workbook.ActiveSheet;
@@ -33,16 +32,50 @@ namespace GeneralClassLibrary
                 int y = 2;
                 int x = 1;
 
+                Dictionary<string, List<int>> headers = FindHeaders(ref sheet);
+                string[] keys = { "мероприятие", "Форма участия", "ФИО", "почт" };
+
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
                 {
                     Person person = new Person()
                     {
-                        SurName = sheet.Cells[y, x].text,
-                        Name = sheet.Cells[y, x + 1].text,
-                        Patronymic = sheet.Cells[y, x + 2].text,
+                        Fio = sheet.Cells[y, headers["ФИО"]].text,                       
                         Company = sheet.Cells[y, x + 3].text,
-                        Email = sheet.Cells[y, x + 4].text
+                        Email = sheet.Cells[y, headers["почт"]].text
                     };
+
+                    foreach (var ev in headers["мероприятие"])
+                    {
+                        person.Events.Add(sheet.Cells[y, ev].text);
+                    }
+                    
+                    //foreach (string k in keys)
+                    //{
+                    //    headers[k]
+                    //}
+                    
+                    //foreach (KeyValuePair<string, List<int>> header in headers)
+                    //{
+                    //    if (header.Key.Equals(keys[0]))
+                    //    {
+                    //        foreach (var l in header.Value)
+                    //        {
+                    //            if(sheet.Cells[y, x].text != "")
+                    //            {
+                    //                person.Events.Add(0);
+                    //            }
+                    //        }
+                    //    }                                                
+                    //}
+
+                    //Person person = new Person()
+                    //{
+                    //    SurName = sheet.Cells[y, x].text,
+                    //    Name = sheet.Cells[y, x + 1].text,
+                    //    Patronymic = sheet.Cells[y, x + 2].text,
+                    //    Company = sheet.Cells[y, x + 3].text,
+                    //    Email = sheet.Cells[y, x + 4].text
+                    //};
 
                     QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
 
@@ -69,12 +102,38 @@ namespace GeneralClassLibrary
                 Marshal.ReleaseComObject(application);
                 Marshal.ReleaseComObject(workbooks);
                 Marshal.ReleaseComObject(workbook);
-                //Marshal.ReleaseComObject(sheets);
                 Marshal.ReleaseComObject(sheet);
 
             }
             return lpersons;
         }
+
+        private static Dictionary<string, List<int>> FindHeaders(ref Worksheet sheet)
+        {
+            Dictionary<string, List<int>> dic= new Dictionary<string, List<int>>();
+
+            string[] keys = { "мероприятие", "Форма участия", "ФИО", "почт" };
+            int x = 1;
+
+            while (sheet.Cells[1,x].text!="")
+            {
+                string text = sheet.Cells[1, x].text;
+                foreach (string k in keys)
+                {
+                    if (text.Contains(k))
+                    {                        
+                        if (!dic.ContainsKey(k))// создаем список если ключ не найден
+                            dic[k] = new List<int>();
+                        
+                        dic[k].Add(x);// добавляем в список по существующему ключу
+                        break;
+                    }
+                }
+                x++;
+            }
+            return dic;
+        }
+
         public static List<Bitmap> ExcelTo(string arg, string format="png", int err=1)
         {
             //переменные для Excel

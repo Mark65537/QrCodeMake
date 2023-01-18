@@ -42,15 +42,15 @@ namespace GeneralClassLibrary
                 List<LinkedResource> lLinkedResource = new List<LinkedResource>();
                 foreach (KeyValuePair<string, string> entry in confDic)
                 {
-                    if (entry.Key.Contains("$img"))
+                    if (entry.Key.Contains("$img") && File.Exists(entry.Value))
                     {
-                        LinkedResource res = new LinkedResource(entry.Value);                        
-                        res.ContentId = Guid.NewGuid().ToString();
-                        lLinkedResource.Add(res);
+                            LinkedResource res = new LinkedResource(entry.Value);
+                            res.ContentId = Guid.NewGuid().ToString();
+                            lLinkedResource.Add(res);
 
-                        string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
+                            string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
 
-                        body = body.Replace(entry.Key, htmlBody);
+                            body = body.Replace(entry.Key, htmlBody);                        
                     }
                     else
                         body = body.Replace(entry.Key, entry.Value);//заменяем в нем все шаблонные места из файла конфига
