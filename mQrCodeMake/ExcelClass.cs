@@ -31,22 +31,27 @@ namespace GeneralClassLibrary
 
                 int y = 2;
                 int x = 1;
-
-                Dictionary<string, List<int>> headers = FindHeaders(ref sheet);
                 string[] keys = { "мероприятие", "Форма участия", "ФИО", "почт" };
+                Dictionary<string, List<int>> headers = FindHeaders(ref sheet, keys);
+                
+                foreach (string k in keys)
+                    if (!headers.ContainsKey(k))
+                    {
+                        throw new Exception("ошибка");
+                    }
 
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
-                {
+                {                    
                     Person person = new Person()
                     {
-                        Fio = sheet.Cells[y, headers["ФИО"]].text,                       
-                        Company = sheet.Cells[y, x + 3].text,
-                        Email = sheet.Cells[y, headers["почт"]].text
+                        Fio = sheet.Cells[y, headers["ФИО"][0]].text,                       
+                        Email = sheet.Cells[y, headers["почт"][0]].text
                     };
 
-                    foreach (var ev in headers["мероприятие"])
+                    foreach (var f in headers["Форма участия"])
                     {
-                        person.Events.Add(sheet.Cells[y, ev].text);
+                        if(sheet.Cells[y, f].text.Equals("Очная"))
+                            person.Events.Add(sheet.Cells[y, f].text);
                     }
                     
                     //foreach (string k in keys)
@@ -108,18 +113,16 @@ namespace GeneralClassLibrary
             return lpersons;
         }
 
-        private static Dictionary<string, List<int>> FindHeaders(ref Worksheet sheet)
+        private static Dictionary<string, List<int>> FindHeaders(ref Worksheet sheet, string[] keys)
         {
             Dictionary<string, List<int>> dic= new Dictionary<string, List<int>>();
 
-            string[] keys = { "мероприятие", "Форма участия", "ФИО", "почт" };
             int x = 1;
 
             while (sheet.Cells[1,x].text!="")
             {
                 string text = sheet.Cells[1, x].text;
                 foreach (string k in keys)
-                {
                     if (text.Contains(k))
                     {                        
                         if (!dic.ContainsKey(k))// создаем список если ключ не найден
@@ -128,7 +131,6 @@ namespace GeneralClassLibrary
                         dic[k].Add(x);// добавляем в список по существующему ключу
                         break;
                     }
-                }
                 x++;
             }
             return dic;

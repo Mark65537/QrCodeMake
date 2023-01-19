@@ -14,7 +14,7 @@ namespace GeneralClassLibrary
         public string SurName="";
         public string Patronymic = "";
         public string Email = "";
-        public string Company = "";
+        //public string Company = "";
         public List<string> Events= new List<string>();        
         public List<bool>  IsOchn = new List<bool>();        
         public Bitmap QrCode=null;
@@ -36,13 +36,13 @@ namespace GeneralClassLibrary
             Name= name;
             SurName= surname;
             Patronymic= patronymic;
-            Company= company;
+            //Company= company;
             QrCode= qrcode;
         }
 
         public override string ToString()
         {
-            return $"{SurName} {Name} {Patronymic} {Company}";
+            return $"{SurName} {Name} {Patronymic}";
         }
     }
 }

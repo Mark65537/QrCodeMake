@@ -172,7 +172,7 @@ namespace QrCodeMake_WinForm
                     result += MailClass.sendEmail(emailFrom, 
                                                   emailTo,
                                                   pass,
-                                                  body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",
+                                                  body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",//если файла шаблона не существует, то отправляется просто картинка qr-кода
                                                   confDic, 
                                                   subject, 
                                                   provider);
