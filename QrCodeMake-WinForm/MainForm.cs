@@ -210,7 +210,7 @@ namespace QrCodeMake_WinForm
                  Directory.Delete(htmlPath.Replace(".html", ".files"), true);
 
 
-
+            reportDic.Clear();
 
             MessageBox.Show(result, "Информация");
         }

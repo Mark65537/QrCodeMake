@@ -18,7 +18,6 @@ namespace GeneralClassLibrary
         {
             try
             {
-                Dictionary<string, string> report = new Dictionary<string, string>();
                 // адрес smtp-сервера и порт, с которого будем отправлять письмо. Внимание зависит от того где созданна ваша почта
                 SmtpClient mySmtpClient = new SmtpClient($"smtp.{provider}.ru", 25);//есть еще 465 и 587
 
