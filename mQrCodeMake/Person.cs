@@ -21,6 +21,11 @@ namespace GeneralClassLibrary
 
         public string Fio
         {
+            get
+            {
+                return $"{Name} {SurName} {Patronymic}";
+            }
+
             set
             {
                 string[] temp = value.Split();

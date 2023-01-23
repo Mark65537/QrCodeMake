@@ -150,7 +150,8 @@ namespace QrCodeMake_WinForm
             string provider = Settings.Default.provider;
             SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) => { s.AppendChar(c); return s; }, (s) => { s.MakeReadOnly(); return s; });
 
-            Dictionary<string, string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);            
+            Dictionary<string, string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);
+            Dictionary<string, string> reportDic = new Dictionary<string, string>();
             string bmpName = string.Empty;
             string result = string.Empty;
 
@@ -163,41 +164,54 @@ namespace QrCodeMake_WinForm
             {
                 foreach (Person p in lpersons)
                 {
-                    bmpName = qrCodeFolder + p.ToString() + ".png";
+                    if (p.Events.Count > 0)
+                    {
+                        bmpName = qrCodeFolder + p.ToString() + ".png";
 
-                    if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
-                        p.QrCode.Save(bmpName);
+                        if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
+                            p.QrCode.Save(bmpName);
 
-                    confDic["{$img_qrcode}"] = bmpName;
-                    result += MailClass.sendEmail(emailFrom, 
-                                                  emailTo,
-                                                  pass,
-                                                  body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",//если файла шаблона не существует, то отправляется просто картинка qr-кода
-                                                  confDic, 
-                                                  subject, 
-                                                  provider);
+                        confDic["{$img_qrcode}"] = bmpName;
+                        result = MailClass.sendEmail(emailFrom,
+                                                      emailTo,
+                                                      pass,
+                                                      body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",//если файла шаблона не существует, то отправляется просто картинка qr-кода
+                                                      confDic,
+                                                      subject,
+                                                      provider);
+                    }
+                    reportDic.Add(p.Fio, result);
                 }
             }
             else
             {
-                bmpName = qrCodeFolder + lpersons[persons_index].ToString() + ".png";
+                if (lpersons[persons_index].Events.Count > 0)
+                {
+                    bmpName = qrCodeFolder + lpersons[persons_index].ToString() + ".png";
 
-                if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
-                    lpersons[persons_index].QrCode.Save(bmpName);
+                    if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
+                        lpersons[persons_index].QrCode.Save(bmpName);
 
-                confDic["{$img_qrcode}"] = bmpName;
-                result = MailClass.sendEmail(emailFrom,
-                                             emailTo,
-                                             pass,
-                                             body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",
-                                             confDic,
-                                             subject,
-                                             provider);
+                    confDic["{$img_qrcode}"] = bmpName;
+                    result = MailClass.sendEmail(emailFrom,
+                                                 emailTo,
+                                                 pass,
+                                                 body: File.Exists(htmlPath) ? File.ReadAllText(htmlPath) : "{$img_qrcode}",//если файла шаблона не существует, то отправляется просто картинка qr-кода
+                                                 confDic,
+                                                 subject,
+                                                 provider);
+                }
+                reportDic.Add(lpersons[persons_index].Fio, result);
             }
 
-            File.Delete(htmlPath);
-            if(Directory.Exists(htmlPath.Replace(".html", ".files")))
-                Directory.Delete(htmlPath.Replace(".html", ".files"), true);
+            //удаление ненужных папок и файлов 
+             File.Delete(htmlPath);
+             if(Directory.Exists(htmlPath.Replace(".html", ".files")))
+                 Directory.Delete(htmlPath.Replace(".html", ".files"), true);
+
+
+
+
             MessageBox.Show(result, "Информация");
         }
 
