@@ -70,11 +70,17 @@ namespace QrCodeMake_WinForm
                     lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName);
                 else
                     lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
-                
-                pB_QrCode.Image = lpersons[0].QrCode;                
-                b_next.Enabled=lpersons.Count > 1 ? true : false;
-                b_copyQr.Enabled = true;
-                b_sendEmail.Enabled = true;
+
+                if ()
+                {
+
+                }
+                pB_QrCode.Image = lpersons[0].QrCode;
+                //активация кнопок
+                 b_next.Enabled=lpersons.Count > 1 ? true : false;
+                 b_copyQr.Enabled = true;
+                 b_sendEmail.Enabled = true;
+               //активация кнопок end
             }
         }
 

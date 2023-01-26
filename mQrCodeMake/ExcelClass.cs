@@ -31,62 +31,36 @@ namespace GeneralClassLibrary
 
                 int y = 2;
                 int x = 1;
-                string[] keys = { "мероприятие", "Форма участия", "ФИО", "почт" };
-                Dictionary<string, List<int>> headers = FindHeaders(ref sheet, keys);
-                
-                foreach (string k in keys)
+                string[] keyWords = { "мероприятие", "Форма участия", "ФИО", "почт" };
+                Dictionary<string, List<int>> headers = FindHeaders(ref sheet, keyWords);
+
+                foreach (string k in keyWords)
                     if (!headers.ContainsKey(k))
                     {
-                        throw new Exception("ошибка");
+                        throw new Exception("добавьте столбец с именем "+k);
                     }
 
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
-                {                    
-                    Person person = new Person()
-                    {
-                        Fio = sheet.Cells[y, headers["ФИО"][0]].text,                       
-                        Email = sheet.Cells[y, headers["почт"][0]].text
-                    };
+                {
 
-                    foreach (var f in headers["Форма участия"])
+                    Person person = new Person();
+                    for (int f=0; f<headers["Форма участия"].Count; f++)
                     {
-                        if(sheet.Cells[y, f].text.Equals("Очная"))
-                            person.Events.Add(sheet.Cells[y, f].text);
+                        if (sheet.Cells[y, headers["Форма участия"][f]].text.Equals("Очная"))
+                        {
+                            person.Events.Add(sheet.Cells[y, headers["мероприятие"][f]].text);
+                        }
+                        if ( (f == headers["Форма участия"].Count-1) && person.Events.Count > 0)
+                        {
+                            person.Fio = sheet.Cells[y, headers["ФИО"][0]].text;
+                            person.Email = sheet.Cells[y, headers["почт"][0]].text;
+                            QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
+                            person.QrCode = qr.ToBitmap();
+
+                            lpersons.Add(person);
+                        }
                     }
-                    
-                    //foreach (string k in keys)
-                    //{
-                    //    headers[k]
-                    //}
-                    
-                    //foreach (KeyValuePair<string, List<int>> header in headers)
-                    //{
-                    //    if (header.Key.Equals(keys[0]))
-                    //    {
-                    //        foreach (var l in header.Value)
-                    //        {
-                    //            if(sheet.Cells[y, x].text != "")
-                    //            {
-                    //                person.Events.Add(0);
-                    //            }
-                    //        }
-                    //    }                                                
-                    //}
 
-                    //Person person = new Person()
-                    //{
-                    //    SurName = sheet.Cells[y, x].text,
-                    //    Name = sheet.Cells[y, x + 1].text,
-                    //    Patronymic = sheet.Cells[y, x + 2].text,
-                    //    Company = sheet.Cells[y, x + 3].text,
-                    //    Email = sheet.Cells[y, x + 4].text
-                    //};
-
-                    QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
-
-                    person.QrCode = qr.ToBitmap();
-
-                    lpersons.Add(person);
                     y++;
                 }
                 //surcell = sheet.Cells[2,1];
