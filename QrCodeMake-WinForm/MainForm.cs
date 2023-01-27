@@ -230,5 +230,16 @@ namespace QrCodeMake_WinForm
             Settings.Default.excelFile = tB_fileName.Text;
             Settings.Default.Save();
         }
+
+        private void tB_fileName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                if (File.Exists(tB_fileName.Text))
+                {
+                    
+                }
+            }
+        }
     }
 }

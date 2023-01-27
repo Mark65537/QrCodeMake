@@ -141,6 +141,7 @@
             this.tB_fileName.Name = "tB_fileName";
             this.tB_fileName.Size = new System.Drawing.Size(285, 21);
             this.tB_fileName.TabIndex = 3;
+            this.tB_fileName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_fileName_KeyPress);
             // 
             // b_open
             // 
