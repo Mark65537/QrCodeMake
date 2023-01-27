@@ -22,8 +22,7 @@ namespace GeneralClassLibrary
              Worksheet sheet = null;
             //переменные для Excel end
             List<Person> lpersons = new List<Person>();
-            try
-            {
+
                 application = new Microsoft.Office.Interop.Excel.Application(); //запуск программы excel
                 workbooks = application.Workbooks;
                 workbook = workbooks.Open(pathToExcel);//получаем доступ к первому листу                                               
@@ -31,13 +30,13 @@ namespace GeneralClassLibrary
 
                 int y = 2;
                 int x = 1;
-                string[] keyWords = { "мероприятие", "Форма участия", "ФИО", "почт" };
+                string[] keyWords = { "мероприятие", "форма участия", "фио", "почт" };
                 Dictionary<string, List<int>> headers = FindHeaders(ref sheet, keyWords);
 
                 foreach (string k in keyWords)
                     if (!headers.ContainsKey(k))
                     {
-                        throw new Exception("добавьте столбец с именем "+k);
+                        throw new Exception("добавьте столбец содержащий имя "+k);
                     }
 
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
@@ -50,7 +49,7 @@ namespace GeneralClassLibrary
                         {
                             person.Events.Add(sheet.Cells[y, headers["мероприятие"][f]].text);
                         }
-                        if ( (f == headers["Форма участия"].Count-1) && person.Events.Count > 0)
+                        if ( (f == headers["Форма участия"].Count-1) && person.Events.Count > 0)// если у нас есть очная 'форма участия' и есть события
                         {
                             person.Fio = sheet.Cells[y, headers["ФИО"][0]].text;
                             person.Email = sheet.Cells[y, headers["почт"][0]].text;
@@ -70,20 +69,15 @@ namespace GeneralClassLibrary
 
 
                 application.Quit();//для выхода из приложения excel                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            finally
-            {
+            
+
                 //освобождаем память, занятую объектами
                 Marshal.ReleaseComObject(application);
                 Marshal.ReleaseComObject(workbooks);
                 Marshal.ReleaseComObject(workbook);
                 Marshal.ReleaseComObject(sheet);
 
-            }
+            
             return lpersons;
         }
 
@@ -96,6 +90,7 @@ namespace GeneralClassLibrary
             while (sheet.Cells[1,x].text!="")
             {
                 string text = sheet.Cells[1, x].text;
+                text=text.ToLower();
                 foreach (string k in keys)
                     if (text.Contains(k))
                     {                        

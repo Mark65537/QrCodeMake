@@ -63,24 +63,27 @@ namespace QrCodeMake_WinForm
         }
 
         private void b_open_Click(object sender, EventArgs e)
-        {
+        {            
             if (oFD_file.ShowDialog() == DialogResult.OK) {
-                tB_fileName.Text = oFD_file.FileName;
-                if(cB_error.Text.Equals(string.Empty))
-                    lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName);
-                else
-                    lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
-
-                if ()
+                try
                 {
+                    tB_fileName.Text = oFD_file.FileName;
+                    if (cB_error.Text.Equals(string.Empty))
+                        lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName);
+                    else
+                        lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
 
+                    pB_QrCode.Image = lpersons[0].QrCode;
+                    //активация кнопок
+                    b_next.Enabled = lpersons.Count > 1 ? true : false;
+                    b_copyQr.Enabled = true;
+                    b_sendEmail.Enabled = true;
+                    //активация кнопок end
                 }
-                pB_QrCode.Image = lpersons[0].QrCode;
-                //активация кнопок
-                 b_next.Enabled=lpersons.Count > 1 ? true : false;
-                 b_copyQr.Enabled = true;
-                 b_sendEmail.Enabled = true;
-               //активация кнопок end
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message,"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
