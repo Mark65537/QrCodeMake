@@ -287,6 +287,7 @@
             this.Text = "QrCodeMake ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.pB_QrCode)).EndInit();
             this.cMS_forPicBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nUD_border)).EndInit();

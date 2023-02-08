@@ -28,7 +28,8 @@ namespace GeneralClassLibrary
 
             set
             {
-                string[] temp = value.Split();
+                string[] temp= { "", "", "" };
+                temp = value.Split();
                 Name = temp[0];
                 SurName= temp[1];
                 Patronymic = temp[2];

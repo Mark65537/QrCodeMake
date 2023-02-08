@@ -13,9 +13,14 @@ namespace QrCodeMake_WinForm
 {
     public partial class ReportForm : Form
     {
-        public ReportForm()
+        public ReportForm(Dictionary<string, string> reportDic)
         {
             InitializeComponent();
+
+            foreach (KeyValuePair<string, string> item in reportDic)
+            {
+                dGV_report.Rows.Add(item.Key, item.Value);
+            }
         }
 
         private void ReportForm_Load(object sender, EventArgs e)

@@ -16,13 +16,14 @@ namespace GeneralClassLibrary
         public static List<Person> ExcelToPersons(string pathToExcel, int err = 1)
         {
             //переменные для Excel
-             Microsoft.Office.Interop.Excel.Application application = null;//не удалять
-             Workbooks workbooks = null;
-             Workbook workbook = null;
-             Worksheet sheet = null;
+            Microsoft.Office.Interop.Excel.Application application = null;//не удалять
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            Worksheet sheet = null;
             //переменные для Excel end
             List<Person> lpersons = new List<Person>();
-
+            try
+            {
                 application = new Microsoft.Office.Interop.Excel.Application(); //запуск программы excel
                 workbooks = application.Workbooks;
                 workbook = workbooks.Open(pathToExcel);//получаем доступ к первому листу                                               
@@ -36,22 +37,22 @@ namespace GeneralClassLibrary
                 foreach (string k in keyWords)
                     if (!headers.ContainsKey(k))
                     {
-                        throw new Exception("добавьте столбец содержащий имя "+k);
+                        throw new Exception("добавьте столбец содержащий имя " + k);
                     }
 
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
                 {
 
                     Person person = new Person();
-                    for (int f=0; f<headers["Форма участия"].Count; f++)
+                    for (int f = 0; f < headers["форма участия"].Count; f++)
                     {
-                        if (sheet.Cells[y, headers["Форма участия"][f]].text.Equals("Очная"))
+                        if (sheet.Cells[y, headers["форма участия"][f]].text.Equals("Очная"))
                         {
                             person.Events.Add(sheet.Cells[y, headers["мероприятие"][f]].text);
                         }
-                        if ( (f == headers["Форма участия"].Count-1) && person.Events.Count > 0)// если у нас есть очная 'форма участия' и есть события
+                        if ((f == headers["форма участия"].Count - 1) && person.Events.Count > 0)// если у нас есть очная 'форма участия' и есть события
                         {
-                            person.Fio = sheet.Cells[y, headers["ФИО"][0]].text;
+                            person.Fio = sheet.Cells[y, headers["фио"][0]].text;
                             person.Email = sheet.Cells[y, headers["почт"][0]].text;
                             QrCode qr = QrCode.EncodeText(person.ToString(), _eCorLev[err]);
                             person.QrCode = qr.ToBitmap();
@@ -69,13 +70,16 @@ namespace GeneralClassLibrary
 
 
                 application.Quit();//для выхода из приложения excel                
-            
+            }
+            finally 
+            { 
 
                 //освобождаем память, занятую объектами
                 Marshal.ReleaseComObject(application);
                 Marshal.ReleaseComObject(workbooks);
                 Marshal.ReleaseComObject(workbook);
                 Marshal.ReleaseComObject(sheet);
+            }
 
             
             return lpersons;

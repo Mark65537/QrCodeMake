@@ -67,18 +67,23 @@ namespace QrCodeMake_WinForm
             if (oFD_file.ShowDialog() == DialogResult.OK) {
                 try
                 {
+                    lpersons.Clear();
                     tB_fileName.Text = oFD_file.FileName;
                     if (cB_error.Text.Equals(string.Empty))
                         lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName);
                     else
                         lpersons = ExcelClass.ExcelToPersons(oFD_file.FileName, cB_error.SelectedIndex);
 
-                    pB_QrCode.Image = lpersons[0].QrCode;
-                    //активация кнопок
-                    b_next.Enabled = lpersons.Count > 1 ? true : false;
-                    b_copyQr.Enabled = true;
-                    b_sendEmail.Enabled = true;
-                    //активация кнопок end
+                    if (lpersons.Count > 0) {
+                        pB_QrCode.Image = lpersons[0].QrCode;
+                        //активация кнопок
+                        b_next.Enabled = lpersons.Count > 1 ? true : false;
+                        b_copyQr.Enabled = true;
+                        b_sendEmail.Enabled = true;
+                        //активация кнопок end
+                    }
+                    else
+                        MessageBox.Show("Нет участников с очной формой посещения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -169,7 +174,8 @@ namespace QrCodeMake_WinForm
 
             Directory.CreateDirectory(qrCodeFolder).Attributes |= FileAttributes.Hidden;//создание скрытой папки для хранения картинок QR-кодов 
 
-            if (chB_sendAll.Checked)
+            
+            if (chB_sendAll.Checked)//отправить всем
             {
                 foreach (Person p in lpersons)
                 {
@@ -180,7 +186,9 @@ namespace QrCodeMake_WinForm
                         if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                             p.QrCode.Save(bmpName);
 
-                        confDic["{$img_qrcode}"] = bmpName;
+                        confDic["FIO"] = p.Fio;
+                        //confDic["{$FIO}"] = p.;
+                        confDic["Img_QRcode"] = bmpName;
                         result = MailClass.sendEmail(emailFrom,
                                                       emailTo,
                                                       pass,
@@ -192,7 +200,7 @@ namespace QrCodeMake_WinForm
                     reportDic.Add(p.Fio, result);
                 }
             }
-            else
+            else//отправить одному
             {
                 if (lpersons[persons_index].Events.Count > 0)
                 {
@@ -201,7 +209,7 @@ namespace QrCodeMake_WinForm
                     if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                         lpersons[persons_index].QrCode.Save(bmpName);
 
-                    confDic["{$img_qrcode}"] = bmpName;
+                    confDic["$imgQRcode"] = bmpName;
                     result = MailClass.sendEmail(emailFrom,
                                                  emailTo,
                                                  pass,
@@ -218,10 +226,10 @@ namespace QrCodeMake_WinForm
              if(Directory.Exists(htmlPath.Replace(".html", ".files")))
                  Directory.Delete(htmlPath.Replace(".html", ".files"), true);
 
-
+            ReportForm RF = new ReportForm(reportDic);//отправка данных в отчетную форму
             reportDic.Clear();
-
-            MessageBox.Show(result, "Информация");
+            RF.Show();
+            //MessageBox.Show(result, "Информация");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) 
@@ -237,7 +245,18 @@ namespace QrCodeMake_WinForm
             {
                 if (File.Exists(tB_fileName.Text))
                 {
-                    
+
+                }
+            }
+        }
+
+        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                if (File.Exists(tB_fileName.Text))
+                {
+
                 }
             }
         }
