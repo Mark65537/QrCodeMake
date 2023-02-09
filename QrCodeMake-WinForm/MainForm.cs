@@ -76,10 +76,11 @@ namespace QrCodeMake_WinForm
 
                     if (lpersons.Count > 0) {
                         pB_QrCode.Image = lpersons[0].QrCode;
+
                         //активация кнопок
-                        b_next.Enabled = lpersons.Count > 1 ? true : false;
-                        b_copyQr.Enabled = true;
-                        b_sendEmail.Enabled = true;
+                         b_next.Enabled = lpersons.Count > 1 ? true : false;
+                         b_copyQr.Enabled = true;
+                         b_sendEmail.Enabled = true;
                         //активация кнопок end
                     }
                     else
@@ -186,9 +187,13 @@ namespace QrCodeMake_WinForm
                         if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                             p.QrCode.Save(bmpName);
 
-                        confDic["FIO"] = p.Fio;
-                        //confDic["{$FIO}"] = p.;
+                        confDic["Str_FIO"] = p.Fio;
                         confDic["Img_QRcode"] = bmpName;
+                        for (int i=1; i <= p.Events.Count; i++)
+                        {
+                            confDic[$"Str_Event{i}"] = p.Events[i-1];
+                        }
+
                         result = MailClass.sendEmail(emailFrom,
                                                       emailTo,
                                                       pass,
@@ -209,7 +214,13 @@ namespace QrCodeMake_WinForm
                     if (!File.Exists(bmpName))//создаем картинку qr-кода, если ее не существует            
                         lpersons[persons_index].QrCode.Save(bmpName);
 
-                    confDic["$imgQRcode"] = bmpName;
+                    confDic["Str_FIO"] = lpersons[persons_index].Fio;
+                    confDic["Img_QRcode"] = bmpName;
+                    for (int i = 1; i <= lpersons[persons_index].Events.Count; i++)
+                    {
+                        confDic[$"Str_Event{i}"] = lpersons[persons_index].Events[i - 1];
+                    }
+
                     result = MailClass.sendEmail(emailFrom,
                                                  emailTo,
                                                  pass,

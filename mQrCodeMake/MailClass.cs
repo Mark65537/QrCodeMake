@@ -42,7 +42,7 @@ namespace GeneralClassLibrary
                 List<LinkedResource> lLinkedResource = new List<LinkedResource>();
                 foreach (KeyValuePair<string, string> entry in confDic)
                 {
-                    if (entry.Key.Contains("$img") && File.Exists(entry.Value))
+                    if (entry.Key.Contains("Img") && File.Exists(entry.Value))
                     {
                             LinkedResource res = new LinkedResource(entry.Value);
                             res.ContentId = Guid.NewGuid().ToString();

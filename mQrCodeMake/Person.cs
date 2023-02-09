@@ -27,9 +27,12 @@ namespace GeneralClassLibrary
             }
 
             set
-            {
-                string[] temp= { "", "", "" };
-                temp = value.Split();
+            {                
+                string[] temp = value.Split(new char[' ']);
+                if (temp.Length < 3)
+                {
+                    
+                }
                 Name = temp[0];
                 SurName= temp[1];
                 Patronymic = temp[2];
