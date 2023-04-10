@@ -84,9 +84,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneralClassLibrary\mQrCodeMake.csproj">
+    <ProjectReference Include="..\mQrCodeMake\QrCodeMakelib.csproj">
       <Project>{2A9628A0-FDC2-482D-9ED9-B87E52ADAD14}</Project>
-      <Name>mQrCodeMake</Name>
+      <Name>QrCodeMakelib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

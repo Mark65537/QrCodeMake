@@ -16,7 +16,7 @@ using System.Xml.Linq;
 using QrCodeMake_WinForm.Properties;
 using System.Security;
 using System.Security.Cryptography;
-
+using QrCodeMake_WinForm.Classes;
 
 namespace QrCodeMake_WinForm
 {
@@ -27,38 +27,50 @@ namespace QrCodeMake_WinForm
             InitializeComponent();
         }
 
-        List<Person> lpersons= new List<Person>();
-        int persons_index = 0;
+        #region Глобальные переменные
+        List<Person> lpersons = new List<Person>();
+        int persons_index = 0; 
+        #endregion
 
-        //Paths
-         string progPath = Environment.CurrentDirectory;//папка где будут находиться файл конфигурации и файлы шаблонов
-         string wordPath;
-         string htmlPath;
-         string confPath;
-         string qrCodeFolder;
-        //Paths end
+        #region Пути
+        string progPath = Environment.CurrentDirectory;//папка где будут находиться файл конфигурации и файлы шаблонов
+        string wordPath;
+        string htmlPath;
+        string confPath;
+        string qrCodeFolder; 
+        #endregion
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //Paths   перемещены сюда для того что бы работал progPath 
-             wordPath = progPath + "\\template.docx";
-             htmlPath = progPath + "\\template.html";
-             confPath = progPath + "\\conf.cfg";
-             qrCodeFolder = "qrCodeImg\\";
-            //Paths end
+            #region Пути  перемещены сюда для того что бы работал progPath 
+            wordPath = progPath + "\\template.docx";
+            htmlPath = progPath + "\\template.html";
+            confPath = progPath + "\\conf.json";
+            qrCodeFolder = "qrCodeImg\\";
+            #endregion
+            
+
             Text += Assembly.GetExecutingAssembly().GetName().Version;
             MinimumSize = Size;//для того что бы нельзя было уменьшить форму
             cB_error.SelectedIndex = Settings.Default.corErr;
 
-            if (!tB_fileName.Text.Equals(string.Empty) || !(tB_fileName.Text = Settings.Default.excelFile).Equals(string.Empty))
+            if (!string.IsNullOrEmpty(tB_fileName.Text) || !(tB_fileName.Text = Settings.Default.excelFile).Equals(string.Empty))
             {
                 if (cB_error.Text.Equals(string.Empty))
                     lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text);
                 else
                     lpersons = ExcelClass.ExcelToPersons(tB_fileName.Text, cB_error.SelectedIndex);
 
-                pB_QrCode.Image = lpersons[0].QrCode;
-                b_next.Enabled = lpersons.Count > 1 ? true : false;
+                if (lpersons.Count > 1)
+                {
+                    pB_QrCode.Image = lpersons[0].QrCode;
+                    b_next.Enabled = true;
+                }
+                else
+                {
+                    b_next.Enabled = false;
+                }                
             }
         }
 
@@ -77,11 +89,13 @@ namespace QrCodeMake_WinForm
                     if (lpersons.Count > 0) {
                         pB_QrCode.Image = lpersons[0].QrCode;
 
-                        //активация кнопок
-                         b_next.Enabled = lpersons.Count > 1 ? true : false;
-                         b_copyQr.Enabled = true;
-                         b_sendEmail.Enabled = true;
-                        //активация кнопок end
+
+                        #region Активация кнопок
+                        b_next.Enabled = lpersons.Count > 1 ? true : false;
+                        b_copyQr.Enabled = true;
+                        b_sendEmail.Enabled = true; 
+                        #endregion
+
                     }
                     else
                         MessageBox.Show("Нет участников с очной формой посещения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -128,47 +142,34 @@ namespace QrCodeMake_WinForm
 
         private void b_prev_Click(object sender, EventArgs e)
         {
-            if (--persons_index == 0)
-            {
-                b_prev.Enabled = false;
-                b_next.Enabled = true;
-            }
-            else
-            {
-                b_next.Enabled = true;
-                b_prev.Enabled = true;
-            }
-
+            persons_index--;
+            b_prev.Enabled = persons_index != 0;
+            b_next.Enabled = true;
             pB_QrCode.Image = lpersons[persons_index].QrCode;
         }
 
         private void b_next_Click(object sender, EventArgs e)
         {
-            if ((++persons_index) == lpersons.Count - 1)
-            {
-                b_next.Enabled = false;
-            }
-            else
-            {
-                b_next.Enabled = true;
-            }
-
+            persons_index++;
+            b_next.Enabled = persons_index < lpersons.Count - 1;
             b_prev.Enabled = true;
             pB_QrCode.Image = lpersons[persons_index].QrCode;
         }
 
         private void b_sendEmail_Click(object sender, EventArgs e)
         {
+            #region Переменные
             string subject = Settings.Default.subject;
             string emailFrom = Settings.Default.mailFrom;
             string emailTo = lpersons[persons_index].Email;
             string provider = Settings.Default.provider;
             SecureString pass = Settings.Default.appPass.Aggregate(new SecureString(), (s, c) => { s.AppendChar(c); return s; }, (s) => { s.MakeReadOnly(); return s; });
 
-            Dictionary<string, string> confDic = HtmlClass.ReadCfg(htmlPath, confPath);
+            Dictionary<string, string> confDic = HtmlClass.ReadJSONcfg(confPath);
             Dictionary<string, string> reportDic = new Dictionary<string, string>();
             string bmpName = string.Empty;
-            string result = string.Empty;
+            string result = string.Empty; 
+            #endregion
 
             if (File.Exists(wordPath)) 
                 WordClass.ConvertDocToHtml(wordPath, htmlPath);
@@ -271,5 +272,13 @@ namespace QrCodeMake_WinForm
                 }
             }
         }
+
+        private void b_settings_Click(object sender, EventArgs e)
+        {
+            //List<Options> options = new List<Options>();
+            OptionForm OF = new OptionForm(confPath);//отправка данных в отчетную форму
+            OF.Show();
+        }
+        
     }
 }

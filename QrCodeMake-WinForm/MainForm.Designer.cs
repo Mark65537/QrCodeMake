@@ -49,6 +49,7 @@
             this.b_sendEmail = new System.Windows.Forms.Button();
             this.b_about = new System.Windows.Forms.Button();
             this.chB_sendAll = new System.Windows.Forms.CheckBox();
+            this.b_settings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pB_QrCode)).BeginInit();
             this.cMS_forPicBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_border)).BeginInit();
@@ -264,11 +265,24 @@
             this.chB_sendAll.Text = "Отправить всем";
             this.chB_sendAll.UseVisualStyleBackColor = true;
             // 
+            // b_settings
+            // 
+            this.b_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_settings.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("b_settings.BackgroundImage")));
+            this.b_settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.b_settings.Location = new System.Drawing.Point(373, 12);
+            this.b_settings.Name = "b_settings";
+            this.b_settings.Size = new System.Drawing.Size(25, 25);
+            this.b_settings.TabIndex = 13;
+            this.b_settings.UseVisualStyleBackColor = true;
+            this.b_settings.Click += new System.EventHandler(this.b_settings_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(410, 383);
+            this.Controls.Add(this.b_settings);
             this.Controls.Add(this.chB_sendAll);
             this.Controls.Add(this.b_about);
             this.Controls.Add(this.b_sendEmail);
@@ -317,6 +331,7 @@
         private System.Windows.Forms.Button b_sendEmail;
         private System.Windows.Forms.Button b_about;
         private System.Windows.Forms.CheckBox chB_sendAll;
+        private System.Windows.Forms.Button b_settings;
     }
 }
 

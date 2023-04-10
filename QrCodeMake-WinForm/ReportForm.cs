@@ -30,7 +30,5 @@ namespace QrCodeMake_WinForm
             //    dGV_report.Rows.Add(item.Key, item.Value);
             //}
         }
-
-        
     }
 }

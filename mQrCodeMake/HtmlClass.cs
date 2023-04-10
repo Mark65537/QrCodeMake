@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace GeneralClassLibrary
 {
     public static class HtmlClass
     {
-        public static Dictionary<string, string> ReadCfg(string PathToHtml, string PathToCfg)
+        public static Dictionary<string, string> ReadCfg(string PathToCfg = "conf.json")
         {
             Dictionary<string,string> confDic= new Dictionary<string,string>();
             string s;
@@ -20,6 +21,23 @@ namespace GeneralClassLibrary
                     confDic[str[0]] = str[1];
                 }
             
+            return confDic;
+        }
+
+        public static Dictionary<string, string> ReadJSONcfg(string confPath)
+        {
+            var confDic = new Dictionary<string, string>();
+
+            
+            var json = File.ReadAllText(confPath, Encoding.UTF8);
+            var jsonObj = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
+            
+            foreach (var kvp in jsonObj)
+            {
+                confDic[kvp.Key] = kvp.Value["val"];
+            }
+            
+
             return confDic;
         }
 
