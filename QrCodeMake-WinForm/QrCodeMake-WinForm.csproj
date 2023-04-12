@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\MailMessageInfo.cs" />
+    <Compile Include="Classes\DataItem.cs" />
     <Compile Include="Classes\Options.cs" />
     <Compile Include="DictionaryBindingList.cs" />
     <Compile Include="MainForm.cs">

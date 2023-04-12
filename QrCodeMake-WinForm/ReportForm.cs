@@ -25,10 +25,7 @@ namespace QrCodeMake_WinForm
 
         private void ReportForm_Load(object sender, EventArgs e)
         {
-            //foreach (KeyValuePair<string, string> item in map)
-            //{
-            //    dGV_report.Rows.Add(item.Key, item.Value);
-            //}
+            MinimumSize = Size;
         }
     }
 }

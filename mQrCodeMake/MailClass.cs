@@ -9,26 +9,27 @@ using DocumentFormat.OpenXml;
 using System.Security;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Windows.Forms;
+using QrCodeMakelib;
 
 namespace GeneralClassLibrary
 {
     public class MailClass
     {
-        public static string sendEmail(string emailFrom, string emailTo, SecureString pass, string body, Dictionary<string, string> confDic, string subject= "Test message", string provider="yandex")
+        public static string sendEmail(MailMessageInfo mMI, Dictionary<string, string> confDic)
         {
             try
             {
                 // адрес smtp-сервера и порт, с которого будем отправлять письмо. Внимание зависит от того где созданна ваша почта
-                SmtpClient mySmtpClient = new SmtpClient($"smtp.{provider}.ru", 25);//есть еще 465 и 587
+                SmtpClient mySmtpClient = new SmtpClient($"smtp.{mMI.provider}.ru", 25);//есть еще 465 и 587
 
                 // set smtp-client with basicAuthentication
                 mySmtpClient.UseDefaultCredentials = false;
-                mySmtpClient.Credentials = new NetworkCredential(emailFrom, pass);
+                mySmtpClient.Credentials = new NetworkCredential(mMI.emailFrom, mMI.pass);
                 mySmtpClient.EnableSsl = true;
 
                 // add from,to mailaddresses
-                MailAddress from = new MailAddress(emailFrom, "Test");
-                MailAddress to = new MailAddress(emailTo, "TestToName");
+                MailAddress from = new MailAddress(mMI.emailFrom, "Test");
+                MailAddress to = new MailAddress(mMI.emailTo, "TestToName");
                 MailMessage myMail = new MailMessage(from, to);
 
                 // add ReplyTo
@@ -36,12 +37,17 @@ namespace GeneralClassLibrary
                 //myMail.ReplyToList.Add(replyTo);
 
                 // set subject and encoding
-                myMail.Subject = subject;
+                myMail.Subject = mMI.subject;
 
                 // set body-message and encoding
                 List<LinkedResource> lLinkedResource = new List<LinkedResource>();
                 foreach (KeyValuePair<string, string> entry in confDic)
                 {
+                    //поставить условие если entry является цифрой, то продолжить цикл
+                    if (int.TryParse(entry.Key, out int result))
+                    {
+                        continue;
+                    }
                     if (entry.Key.Contains("Img") && File.Exists(entry.Value))
                     {
                             LinkedResource res = new LinkedResource(entry.Value);
@@ -50,13 +56,13 @@ namespace GeneralClassLibrary
 
                             string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
 
-                            body = body.Replace(entry.Key, htmlBody);                        
+                            mMI.body = mMI.body.Replace(entry.Key, htmlBody);                        
                     }
                     else
-                        body = body.Replace(entry.Key, entry.Value);//заменяем в нем все шаблонные места из файла конфига
+                        mMI.body = mMI.body.Replace(entry.Key, entry.Value);//заменяем в нем все шаблонные места из файла конфига
                 }
                 
-                AlternateView alternateView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+                AlternateView alternateView = AlternateView.CreateAlternateViewFromString(mMI.body, null, MediaTypeNames.Text.Html);
 
                 lLinkedResource.ForEach(alternateView.LinkedResources.Add);//тоже самое что foreach (LinkedResource llr in lLinkedResource) alternateView.LinkedResources.Add(llr);
                 
@@ -66,7 +72,7 @@ namespace GeneralClassLibrary
                 myMail.IsBodyHtml = true;
 
                 mySmtpClient.Send(myMail);
-                return $"Сообщение отправленно\n";
+                return "Сообщение отправленно\n";
             }
             catch (Exception ex)
             {

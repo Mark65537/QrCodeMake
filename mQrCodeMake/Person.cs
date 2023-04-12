@@ -29,13 +29,21 @@ namespace GeneralClassLibrary
             set
             {                
                 string[] temp = value.Split(new char[' ']);
-                if (temp.Length < 3)
+                if (temp.Length == 1)
                 {
-                    
+                    Name = temp[0];
                 }
-                Name = temp[0];
-                SurName= temp[1];
-                Patronymic = temp[2];
+                else if (temp.Length == 2)
+                {
+                    Name = temp[0];
+                    SurName = temp[1];
+                }
+                else
+                {
+                    Name = temp[0];
+                    SurName = temp[1];
+                    Patronymic = temp[2];
+                }
             }
         }
 

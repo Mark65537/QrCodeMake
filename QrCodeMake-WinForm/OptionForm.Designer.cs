@@ -36,9 +36,10 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dGV_unChangeable = new System.Windows.Forms.DataGridView();
             this.b_save = new System.Windows.Forms.Button();
             this.b_cancel = new System.Windows.Forms.Button();
-            this.dGV_unChangeable = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tC_conf.SuspendLayout();
@@ -114,6 +115,24 @@
             this.tabPage2.Text = "Неизменяемые";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // dGV_unChangeable
+            // 
+            this.dGV_unChangeable.AllowUserToAddRows = false;
+            this.dGV_unChangeable.AllowUserToDeleteRows = false;
+            this.dGV_unChangeable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dGV_unChangeable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dGV_unChangeable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column4,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn3});
+            this.dGV_unChangeable.Location = new System.Drawing.Point(0, 0);
+            this.dGV_unChangeable.Name = "dGV_unChangeable";
+            this.dGV_unChangeable.ReadOnly = true;
+            this.dGV_unChangeable.Size = new System.Drawing.Size(618, 533);
+            this.dGV_unChangeable.TabIndex = 1;
+            // 
             // b_save
             // 
             this.b_save.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -125,6 +144,7 @@
             this.b_save.TabIndex = 1;
             this.b_save.Text = "Сохранить";
             this.b_save.UseVisualStyleBackColor = true;
+            this.b_save.Click += new System.EventHandler(this.b_save_Click);
             // 
             // b_cancel
             // 
@@ -139,32 +159,23 @@
             this.b_cancel.UseVisualStyleBackColor = true;
             this.b_cancel.Click += new System.EventHandler(this.b_cancel_Click);
             // 
-            // dGV_unChangeable
+            // Column4
             // 
-            this.dGV_unChangeable.AllowUserToAddRows = false;
-            this.dGV_unChangeable.AllowUserToDeleteRows = false;
-            this.dGV_unChangeable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dGV_unChangeable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dGV_unChangeable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGV_unChangeable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn3});
-            this.dGV_unChangeable.Location = new System.Drawing.Point(0, 0);
-            this.dGV_unChangeable.Name = "dGV_unChangeable";
-            this.dGV_unChangeable.ReadOnly = true;
-            this.dGV_unChangeable.Size = new System.Drawing.Size(618, 533);
-            this.dGV_unChangeable.TabIndex = 1;
+            this.Column4.FillWeight = 15.22843F;
+            this.Column4.HeaderText = "ID";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 142.3858F;
             this.dataGridViewTextBoxColumn1.HeaderText = "Имя";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
+            this.dataGridViewTextBoxColumn3.FillWeight = 142.3858F;
             this.dataGridViewTextBoxColumn3.HeaderText = "Описание";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
@@ -202,6 +213,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridView dGV_unChangeable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }

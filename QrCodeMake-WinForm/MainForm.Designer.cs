@@ -50,6 +50,7 @@
             this.b_about = new System.Windows.Forms.Button();
             this.chB_sendAll = new System.Windows.Forms.CheckBox();
             this.b_settings = new System.Windows.Forms.Button();
+            this.tB_Fio = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pB_QrCode)).BeginInit();
             this.cMS_forPicBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_border)).BeginInit();
@@ -57,12 +58,10 @@
             // 
             // pB_QrCode
             // 
-            this.pB_QrCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pB_QrCode.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pB_QrCode.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pB_QrCode.ContextMenuStrip = this.cMS_forPicBox;
-            this.pB_QrCode.Location = new System.Drawing.Point(67, 12);
+            this.pB_QrCode.Location = new System.Drawing.Point(67, 38);
             this.pB_QrCode.Name = "pB_QrCode";
             this.pB_QrCode.Size = new System.Drawing.Size(266, 215);
             this.pB_QrCode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -108,10 +107,10 @@
             // 
             // b_prev
             // 
-            this.b_prev.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.b_prev.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_prev.Enabled = false;
             this.b_prev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_prev.Location = new System.Drawing.Point(67, 234);
+            this.b_prev.Location = new System.Drawing.Point(67, 260);
             this.b_prev.Name = "b_prev";
             this.b_prev.Size = new System.Drawing.Size(75, 23);
             this.b_prev.TabIndex = 1;
@@ -121,11 +120,11 @@
             // 
             // b_next
             // 
-            this.b_next.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.b_next.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_next.AutoSize = true;
             this.b_next.Enabled = false;
             this.b_next.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_next.Location = new System.Drawing.Point(257, 232);
+            this.b_next.Location = new System.Drawing.Point(257, 258);
             this.b_next.Name = "b_next";
             this.b_next.Size = new System.Drawing.Size(75, 25);
             this.b_next.TabIndex = 2;
@@ -135,10 +134,9 @@
             // 
             // tB_fileName
             // 
-            this.tB_fileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_fileName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tB_fileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tB_fileName.Location = new System.Drawing.Point(13, 264);
+            this.tB_fileName.Location = new System.Drawing.Point(13, 290);
             this.tB_fileName.Name = "tB_fileName";
             this.tB_fileName.Size = new System.Drawing.Size(285, 21);
             this.tB_fileName.TabIndex = 3;
@@ -146,9 +144,9 @@
             // 
             // b_open
             // 
-            this.b_open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_open.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_open.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_open.Location = new System.Drawing.Point(314, 263);
+            this.b_open.Location = new System.Drawing.Point(314, 289);
             this.b_open.Name = "b_open";
             this.b_open.Size = new System.Drawing.Size(75, 23);
             this.b_open.TabIndex = 4;
@@ -158,10 +156,10 @@
             // 
             // l_error
             // 
-            this.l_error.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.l_error.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.l_error.AutoSize = true;
             this.l_error.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.l_error.Location = new System.Drawing.Point(14, 295);
+            this.l_error.Location = new System.Drawing.Point(14, 329);
             this.l_error.Name = "l_error";
             this.l_error.Size = new System.Drawing.Size(119, 15);
             this.l_error.TabIndex = 5;
@@ -169,10 +167,10 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(269, 295);
+            this.label1.Location = new System.Drawing.Point(269, 329);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 15);
             this.label1.TabIndex = 6;
@@ -181,9 +179,9 @@
             // 
             // nUD_border
             // 
-            this.nUD_border.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nUD_border.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.nUD_border.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nUD_border.Location = new System.Drawing.Point(329, 293);
+            this.nUD_border.Location = new System.Drawing.Point(329, 327);
             this.nUD_border.Name = "nUD_border";
             this.nUD_border.Size = new System.Drawing.Size(61, 21);
             this.nUD_border.TabIndex = 7;
@@ -196,10 +194,10 @@
             // 
             // b_copyQr
             // 
-            this.b_copyQr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_copyQr.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_copyQr.Enabled = false;
             this.b_copyQr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_copyQr.Location = new System.Drawing.Point(13, 323);
+            this.b_copyQr.Location = new System.Drawing.Point(13, 357);
             this.b_copyQr.Name = "b_copyQr";
             this.b_copyQr.Size = new System.Drawing.Size(138, 23);
             this.b_copyQr.TabIndex = 8;
@@ -209,7 +207,7 @@
             // 
             // cB_error
             // 
-            this.cB_error.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cB_error.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cB_error.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_error.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cB_error.FormattingEnabled = true;
@@ -218,7 +216,7 @@
             "Medium",
             "Quartile",
             "High"});
-            this.cB_error.Location = new System.Drawing.Point(131, 291);
+            this.cB_error.Location = new System.Drawing.Point(131, 325);
             this.cB_error.Name = "cB_error";
             this.cB_error.Size = new System.Drawing.Size(132, 23);
             this.cB_error.TabIndex = 9;
@@ -231,9 +229,9 @@
             // 
             // b_sendEmail
             // 
-            this.b_sendEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_sendEmail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_sendEmail.Enabled = false;
-            this.b_sendEmail.Location = new System.Drawing.Point(162, 323);
+            this.b_sendEmail.Location = new System.Drawing.Point(162, 357);
             this.b_sendEmail.Name = "b_sendEmail";
             this.b_sendEmail.Size = new System.Drawing.Size(123, 23);
             this.b_sendEmail.TabIndex = 10;
@@ -243,9 +241,9 @@
             // 
             // b_about
             // 
-            this.b_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_about.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_about.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_about.Location = new System.Drawing.Point(3, 361);
+            this.b_about.Location = new System.Drawing.Point(4, 410);
             this.b_about.Name = "b_about";
             this.b_about.Size = new System.Drawing.Size(83, 19);
             this.b_about.TabIndex = 11;
@@ -254,11 +252,11 @@
             // 
             // chB_sendAll
             // 
-            this.chB_sendAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chB_sendAll.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.chB_sendAll.AutoSize = true;
             this.chB_sendAll.Checked = true;
             this.chB_sendAll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chB_sendAll.Location = new System.Drawing.Point(293, 326);
+            this.chB_sendAll.Location = new System.Drawing.Point(293, 360);
             this.chB_sendAll.Name = "chB_sendAll";
             this.chB_sendAll.Size = new System.Drawing.Size(109, 17);
             this.chB_sendAll.TabIndex = 12;
@@ -267,21 +265,30 @@
             // 
             // b_settings
             // 
-            this.b_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_settings.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_settings.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("b_settings.BackgroundImage")));
             this.b_settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.b_settings.Location = new System.Drawing.Point(373, 12);
+            this.b_settings.Location = new System.Drawing.Point(377, 8);
             this.b_settings.Name = "b_settings";
             this.b_settings.Size = new System.Drawing.Size(25, 25);
             this.b_settings.TabIndex = 13;
             this.b_settings.UseVisualStyleBackColor = true;
             this.b_settings.Click += new System.EventHandler(this.b_settings_Click);
             // 
+            // tB_Fio
+            // 
+            this.tB_Fio.Location = new System.Drawing.Point(67, 13);
+            this.tB_Fio.MaximumSize = new System.Drawing.Size(1000, 100);
+            this.tB_Fio.Name = "tB_Fio";
+            this.tB_Fio.Size = new System.Drawing.Size(266, 20);
+            this.tB_Fio.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(410, 383);
+            this.ClientSize = new System.Drawing.Size(410, 435);
+            this.Controls.Add(this.tB_Fio);
             this.Controls.Add(this.b_settings);
             this.Controls.Add(this.chB_sendAll);
             this.Controls.Add(this.b_about);
@@ -332,6 +339,7 @@
         private System.Windows.Forms.Button b_about;
         private System.Windows.Forms.CheckBox chB_sendAll;
         private System.Windows.Forms.Button b_settings;
+        private System.Windows.Forms.TextBox tB_Fio;
     }
 }
 
