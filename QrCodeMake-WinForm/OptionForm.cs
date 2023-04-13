@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using QrCodeMake_WinForm.Classes;
+using QrCodeMakelib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace QrCodeMake_WinForm
     public partial class OptionForm : Form
     {
         string confPath;
-        public OptionForm(string confPath)
+        public OptionForm(string confPath, List<Options> unChgableVars)
         {
             try
             {
@@ -32,19 +33,17 @@ namespace QrCodeMake_WinForm
 
                 // Десериализуем JSON строку в объект
                 var jsonObject = JObject.Parse(jsonString);
-                int key;
+                int index = 0;
                 foreach (var jo in jsonObject)
                 {
-                    if (int.TryParse(jo.Key, out key))
-                    {
-                        dGV_unChangeable.Rows.Add(key, jo.Value["val"], jo.Value["desc"]);                        
-                    }
-                    else
-                    {
-                        dGV_changeable.Rows.Add(jo.Key, jo.Value["val"], jo.Value["desc"]);
-                    }
+                    dGV_changeable.Rows.Add(jo.Key, jo.Value["val"], jo.Value["desc"]);                    
                 }
-            }catch(Exception ex)
+                foreach (var uCV in unChgableVars)
+                {
+                    dGV_unChangeable.Rows.Add(index++, uCV.name, uCV.desc);
+                }
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

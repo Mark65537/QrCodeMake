@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Word;
 using OpenXmlPowerTools;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,49 @@ namespace GeneralClassLibrary
                 Marshal.ReleaseComObject(newApp);                
             }
             return err;
+        }
+
+        public static void ReplaceWordsInDocByDic(string wordPath, Dictionary<string, string> confDic)
+        {
+            #region Переменные
+            //заменить в файле word слова из словаря congfDic, где ключ это слово которое надо заменить, а значение это слово на которое надо заменить
+            Word.Application wordApp = new Word.Application();
+            Word.Document doc = new Word.Document();
+            //переместить весь текст из файла Word в string
+            string text = string.Empty; 
+            #endregion
+            
+            try
+            {
+                //открыть файл Word
+                doc = wordApp.Documents.Open(wordPath);
+
+                //получить весь текст из документа
+                text = doc.Content.Text;
+
+                //заменить слова в тексте
+                foreach (KeyValuePair<string, string> entry in confDic)
+                {
+                    text = text.Replace(entry.Key, entry.Value);
+                }
+
+                //очистить документ и вставить новый текст
+                doc.Content.Text = text;
+
+                //сохранить изменения и закрыть документ
+                doc.Save();
+                doc.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                //освободить ресурсы
+                Marshal.ReleaseComObject(doc);
+                Marshal.ReleaseComObject(wordApp);
+            }
         }
     }
 }

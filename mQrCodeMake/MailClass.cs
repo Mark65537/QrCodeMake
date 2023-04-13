@@ -15,7 +15,8 @@ namespace GeneralClassLibrary
 {
     public class MailClass
     {
-        public static string sendEmail(MailMessageInfo mMI, Dictionary<string, string> confDic)
+        //перебрать в цыкле параметр переменную с универсальным типом
+        public static string sendEmail(MailMessageInfo mMI, List<Options> confDic)
         {
             try
             {
@@ -41,25 +42,26 @@ namespace GeneralClassLibrary
 
                 // set body-message and encoding
                 List<LinkedResource> lLinkedResource = new List<LinkedResource>();
-                foreach (KeyValuePair<string, string> entry in confDic)
+                //переделать этот код так что бы вместо Dictionary<string, string> confDic, в цикл передовался List<Options> opts
+                foreach (var opt in confDic)
                 {
                     //поставить условие если entry является цифрой, то продолжить цикл
-                    if (int.TryParse(entry.Key, out int result))
+                    if (int.TryParse(opt.name, out int result))
                     {
                         continue;
                     }
-                    if (entry.Key.Contains("Img") && File.Exists(entry.Value))
+                    if (opt.name.Contains("Img") && File.Exists(opt.val))
                     {
-                            LinkedResource res = new LinkedResource(entry.Value);
+                            LinkedResource res = new LinkedResource(opt.val);
                             res.ContentId = Guid.NewGuid().ToString();
                             lLinkedResource.Add(res);
 
                             string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
 
-                            mMI.body = mMI.body.Replace(entry.Key, htmlBody);                        
+                            mMI.body = mMI.body.Replace(opt.name, htmlBody);                        
                     }
                     else
-                        mMI.body = mMI.body.Replace(entry.Key, entry.Value);//заменяем в нем все шаблонные места из файла конфига
+                        mMI.body = mMI.body.Replace(opt.name, opt.val);//заменяем в нем все шаблонные места из файла конфига
                 }
                 
                 AlternateView alternateView = AlternateView.CreateAlternateViewFromString(mMI.body, null, MediaTypeNames.Text.Html);

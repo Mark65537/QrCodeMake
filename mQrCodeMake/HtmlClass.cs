@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using QrCodeMakelib;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,22 +25,49 @@ namespace GeneralClassLibrary
             
             return confDic;
         }
-
-        public static Dictionary<string, string> ReadJSONcfg(string confPath)
+        //переделай функцию так что бы возвращаемое значение было List<Options>
+        public static List<Options> ReadJSONcfg(string confPath)
         {
-            var confDic = new Dictionary<string, string>();
+            var optionsList = new List<Options>();
 
-            
             var json = File.ReadAllText(confPath, Encoding.UTF8);
             var jsonObj = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
-            
+
             foreach (var kvp in jsonObj)
             {
-                confDic[kvp.Key] = kvp.Value["val"];
+                var option = new Options
+                {
+                    name= kvp.Key,
+                    val = kvp.Value["val"]
+                };
+                optionsList.Add(option);
             }
-            
 
-            return confDic;
+            return optionsList;
+        }
+
+        public static void ReplaceWordsInHtml<T>(string htmlPath, T confDic)
+        {
+            //foreach (KeyValuePair<string, string> conf in confDic)
+            //{
+            //    поставить условие если entry является цифрой, то продолжить цикл
+            //    if (int.TryParse(conf.Key, out int result))
+            //    {
+            //        continue;
+            //    }
+            //    if (conf.Key.Contains("Img") && File.Exists(opt.val))
+            //    {
+            //        LinkedResource res = new LinkedResource(opt.val);
+            //        res.ContentId = Guid.NewGuid().ToString();
+            //        lLinkedResource.Add(res);
+
+            //        string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
+
+            //        mMI.body = mMI.body.Replace(opt.name, htmlBody);
+            //    }
+            //    else
+            //        mMI.body = mMI.body.Replace(opt.name, opt.val);//заменяем в нем все шаблонные места из файла конфига
+            //}
         }
 
         public static void WriteCfg(ref Dictionary<string, string> confDic, string PathToCfg, string key, string value)

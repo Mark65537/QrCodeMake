@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Office.Interop.Excel;
 using Net.Codecrete.QrCodeGenerator;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace GeneralClassLibrary
 {
@@ -16,7 +17,7 @@ namespace GeneralClassLibrary
         public static List<Person> ExcelToPersons(string pathToExcel, int err = 1)
         {
             //переменные для Excel
-            Microsoft.Office.Interop.Excel.Application application = null;//не удалять
+            Excel.Application application = null;//не удалять
             Workbooks workbooks = null;
             Workbook workbook = null;
             Worksheet sheet = null;
@@ -24,7 +25,7 @@ namespace GeneralClassLibrary
             List<Person> lpersons = new List<Person>();
             try
             {
-                application = new Microsoft.Office.Interop.Excel.Application(); //запуск программы excel
+                application = new Excel.Application(); //запуск программы excel
                 workbooks = application.Workbooks;
                 workbook = workbooks.Open(pathToExcel);//получаем доступ к первому листу                                               
                 sheet = workbook.ActiveSheet;
@@ -63,12 +64,6 @@ namespace GeneralClassLibrary
 
                     y++;
                 }
-                //surcell = sheet.Cells[2,1];
-                //namecell = sheet.Cells[2, 1];
-                //parcell = sheet.Cells[2, 1];
-                //orgcell = sheet.Cells[2, 1];
-
-
                 application.Quit();//для выхода из приложения excel                
             }
             finally 
