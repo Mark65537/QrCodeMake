@@ -6,7 +6,7 @@
 
 # Описание программы
 
-![image](https://github.com/Mark65537/QrCodeMake/blob/master/screens/mainDesc.png)
+![image](https://github.com/Mark65537/QrCodeMake/blob/master/screens/mainDesc.jpg)
 
 # Описание проектов
 QrCodeMakelib - проект где собранны основные классы, которые используются в остальных проектах. Для удобства
