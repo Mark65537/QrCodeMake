@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QrCodeMake-WinForm", "QrCod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QrCodeMake-Console", "QrCodeMake-Console\QrCodeMake-Console.csproj", "{A382274C-F2F8-49E5-BD95-9CF3620A1B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QrCodeMakelib", "mQrCodeMake\QrCodeMakelib.csproj", "{2A9628A0-FDC2-482D-9ED9-B87E52ADAD14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QrCodeMakelib", "QrCodeMakelib\QrCodeMakelib.csproj", "{2A9628A0-FDC2-482D-9ED9-B87E52ADAD14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

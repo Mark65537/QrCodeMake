@@ -110,11 +110,10 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\mQrCodeMake\QrCodeMakelib.csproj">
+    <ProjectReference Include="..\QrCodeMakelib\QrCodeMakelib.csproj">
       <Project>{2a9628a0-fdc2-482d-9ed9-b87e52adad14}</Project>
       <Name>QrCodeMakelib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
