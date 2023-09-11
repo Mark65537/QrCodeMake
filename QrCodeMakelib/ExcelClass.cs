@@ -38,8 +38,8 @@ namespace GeneralClassLibrary
                 foreach (string k in keyWords)
                     if (!headers.ContainsKey(k))
                     {
-                        throw new Exception("добавьте столбец содержащий имя " + k);
-                    }
+                        throw new Exception($"добавьте столбец содержащий имя {k}");
+                    }                
 
                 while (sheet.Cells[y, x].text != "")//проверка на пустую строку в vba
                 {
